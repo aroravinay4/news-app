@@ -15,7 +15,6 @@ public class DataConnectorFactory {
         this.service = ServiceGenerator.getRestService(Constants.BASE);
     }
 
-
     public DataConnector createCloudConnector(String baseUrl, int... test) {
         this.service = ServiceGenerator.getRestService(baseUrl);
         return new CloudConnector(service);

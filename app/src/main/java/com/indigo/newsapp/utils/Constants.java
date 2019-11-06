@@ -5,5 +5,7 @@ public class Constants {
     public static final String BASE = "https://newsapi.org/v2/";
     public static final String COUNTRY = "IN";
     public static final String API_KEY = "4778550c35b2434f87bec69cb69a698c";
+    public static final int PAGE_SIZE = 10;
+    public static final int FIRST_PAGE = 1;
 
 }

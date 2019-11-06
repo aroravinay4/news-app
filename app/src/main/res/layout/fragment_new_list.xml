@@ -30,12 +30,6 @@
             android:visibility="gone"
             android:layout_gravity="center"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="@{model.showEmpty}"
-            android:text="No breeds were returned."/>
 
     </FrameLayout>
 </layout>

@@ -17,6 +17,7 @@ import com.indigo.newsapp.R;
 import com.indigo.newsapp.adapter.NewsListAdapter;
 import com.indigo.newsapp.databinding.FragmentNewListBinding;
 import com.indigo.newsapp.model.Article;
+import com.indigo.newsapp.utils.NetworkState;
 import com.indigo.newsapp.viewmodel.NewsListViewModel;
 
 public class FragmentNewsList extends Fragment {
@@ -70,16 +71,20 @@ public class FragmentNewsList extends Fragment {
 
         final NewsListAdapter adapter = new NewsListAdapter();
 
-        newsListViewModel.itemPagedList.observe(this, new Observer<PagedList<Article>>() {
-            @Override
-            public void onChanged(@Nullable PagedList<Article> items) {
-                adapter.submitList(items);
+        newsListViewModel.getNewsLiveData().observe(this, pagedList -> {
+            adapter.submitList(pagedList);
+        });
+
+        newsListViewModel.getNetworkStateLiveData().observe(this, networkState -> {
+            if (networkState != null && networkState.getStatus() == NetworkState.Status.RUNNING) {
+                fragmentNewListBinding.spinnerLoading.setVisibility(View.VISIBLE);
+            } else {
+                fragmentNewListBinding.spinnerLoading.setVisibility(View.GONE);
             }
         });
 
         fragmentNewListBinding.recyclerView.setAdapter(adapter);
 
     }
-
 
 }

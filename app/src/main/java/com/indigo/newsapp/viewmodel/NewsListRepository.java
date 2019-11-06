@@ -16,15 +16,15 @@ public class NewsListRepository {
 
     private NewsListDataManager productSearchDataManager;
 
-
     public void fetchList(String category, int pageSize, int currentPage, final ResponseHandler<NewsModel> responseHandler) {
 
         DataConnectorFactory pdaDataConnectorFactory = new DataConnectorFactory();
         productSearchDataManager = new NewsListDataManager(pdaDataConnectorFactory);
+
         productSearchDataManager.getNewsList(pageSize, currentPage, category, new ResponseHandler<NewsModel>() {
             @Override
-            public void onRequestFailure() {
-                responseHandler.onRequestFailure();
+            public void onRequestFailure(String errorMessage) {
+                responseHandler.onRequestFailure(errorMessage);
             }
 
             @Override

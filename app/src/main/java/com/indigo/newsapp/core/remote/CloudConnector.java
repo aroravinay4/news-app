@@ -9,8 +9,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-
 public class CloudConnector implements DataConnector {
 
     private static final String TAG = CloudConnector.class.getName();
@@ -20,23 +18,21 @@ public class CloudConnector implements DataConnector {
         this.mServiceEndpoint = service;
     }
 
-
-
     @Override
-    public void getNewsList(int pageSize, int page,String category,final ResponseHandler<NewsModel> responseHandler) {
-        mServiceEndpoint.getNewsList(pageSize,page, Constants.COUNTRY,category,Constants.API_KEY).enqueue(new Callback<NewsModel>() {
+    public void getNewsList(int pageSize, int page, String category, final ResponseHandler<NewsModel> responseHandler) {
+        mServiceEndpoint.getNewsList(pageSize, page, Constants.COUNTRY, category, Constants.API_KEY).enqueue(new Callback<NewsModel>() {
             @Override
             public void onResponse(Call<NewsModel> call, Response<NewsModel> response) {
                 if (response != null && response.isSuccessful()) {
                     responseHandler.onRequestSuccess(response.body());
                 } else {
-                    responseHandler.onRequestFailure();
+                    responseHandler.onRequestFailure(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<NewsModel> call, Throwable t) {
-                responseHandler.onRequestFailure();
+                responseHandler.onRequestFailure(t.getMessage());
             }
         });
     }
