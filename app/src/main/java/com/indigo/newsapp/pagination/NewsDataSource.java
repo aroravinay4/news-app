@@ -9,20 +9,20 @@ import com.indigo.newsapp.model.Article;
 import com.indigo.newsapp.model.NewsModel;
 import com.indigo.newsapp.viewmodel.NewsListRepository;
 
-public class ItemDataSource extends PageKeyedDataSource<Integer, Article> {
+import static com.indigo.newsapp.utils.Constants.FIRST_PAGE;
+import static com.indigo.newsapp.utils.Constants.PAGE_SIZE;
 
-    public static final int PAGE_SIZE = 10;
-    private static final int FIRST_PAGE = 1;
+public class ItemDataSource extends PageKeyedDataSource<Integer, Article> {
     NewsListRepository repository = new NewsListRepository();
     private String category;
-    ItemDataSource(String category){
-        this.category=category;
+
+    ItemDataSource(String category) {
+        this.category = category;
     }
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull final LoadInitialCallback<Integer, Article> callback) {
-
-        repository.fetchList(category,PAGE_SIZE,FIRST_PAGE, new ResponseHandler<NewsModel>() {
+        repository.fetchList(category, PAGE_SIZE, FIRST_PAGE, new ResponseHandler<NewsModel>() {
             @Override
             public void onRequestFailure() {
             }
@@ -36,8 +36,8 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, Article> {
 
     @Override
     public void loadBefore(@NonNull final LoadParams<Integer> params, @NonNull final LoadCallback<Integer, Article> callback) {
-        int currentPage=params.key;
-        repository.fetchList(category,PAGE_SIZE,currentPage, new ResponseHandler<NewsModel>() {
+        int currentPage = params.key;
+        repository.fetchList(category, PAGE_SIZE, currentPage, new ResponseHandler<NewsModel>() {
             @Override
             public void onRequestFailure() {
             }
@@ -53,7 +53,7 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, Article> {
     @Override
     public void loadAfter(@NonNull final LoadParams<Integer> params, @NonNull final LoadCallback<Integer, Article> callback) {
         int currentCount = params.key;
-        repository.fetchList(category,PAGE_SIZE,currentCount, new ResponseHandler<NewsModel>() {
+        repository.fetchList(category, PAGE_SIZE, currentCount, new ResponseHandler<NewsModel>() {
             @Override
             public void onRequestFailure() {
             }
